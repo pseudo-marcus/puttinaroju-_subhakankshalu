@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Birthday!</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Cedarville+Cursive&display=swap");
+      body {
+        background-color: #ffd1dc; /* Cute pastel pink */
+        font-family: "Cedarville Cursive", cursive;
+        margin: 0;
+        height: 100vh;
+        overflow: hidden; /* Initially hide scrollbar */
+        scroll-behavior: smooth; /* Enable smooth scrolling */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: overflow-y 0.5s; /* Smooth transition for scrollbar */
+      }
+      .intro {
+        text-align: center;
+        padding: 100px 20px;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .show-scrollbar {
+        overflow-y: auto; /* Show vertical scrollbar */
+      }
+
+      .container {
+        text-align: center;
+        padding: auto;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      h1 {
+        font-size: 3rem;
+        color: #ffffff;
+        margin-bottom: 2rem;
+        animation: bounce 1.5s infinite;
+      }
+
+      .mail {
+        width: 100px;
+        cursor: pointer;
+        animation: glowing 1.5s infinite alternate;
+        margin: 0 auto; /* Center the mail icon horizontally */
+      }
+
+      /* Glow effect for mail icon */
+      @keyframes glowing {
+        0% {
+          filter: drop-shadow(0 0 5px #fff);
+        }
+        100% {
+          filter: drop-shadow(0 0 20px #ff4081);
+        }
+      }
+
+      .section {
+        display: flex; /* Ensure all sections are always visible */
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+        box-sizing: border-box;
+        opacity: 0; /* Start with sections invisible */
+        transition: opacity 1s ease-in-out; /* Fade-in effect */
+      }
+
+      .section.visible {
+        opacity: 1; /* Ensure section is visible with fade-in */
+      }
+
+      .message-box {
+        width: 900px;
+        height: 500px;
+        background-color: #fff;
+        border-radius: 20px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1),
+          0 5px 15px rgba(0, 0, 0, 0.05);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(145deg, #f0f0f0, #fafafa);
+        margin: auto;
+      }
+
+      .message-box:hover {
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      }
+
+      p {
+        color: #333;
+        font-size: 28px;
+        margin: 40px;
+        line-height: 1.5;
+      }
+
+      .spotify-section iframe {
+        width: 900px;
+        height: 500px;
+        border-radius: 12px;
+      }
+
+      ::-webkit-scrollbar {
+        width: 15px; /* Width of the scrollbar */
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: #ff4081; /* Thumb color */
+        border-radius: 6px; /* Rounded corners */
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: #f50057; /* Thumb color on hover */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="intro">
+        <h1>Happy Birthday, Love!</h1>
+
+        <!-- Glowing mail icon, centered vertically and horizontally -->
+        <img src="mail.svg" alt="Mail" id="mailIcon" class="mail" />
+      </div>
+    </div>
+
+    <!-- Special Message Section -->
+    <div id="messageSection" class="section">
+      <div class="message-box" id="messageDiv">
+        <p>
+          Happy Birthday, Manaswi! 
+          May your day be as awesome as a Brooklyn
+          Nine-Nine precinct party and as fun as a New Girl night in. 
+          
+          
+          P.S-Click the card for a special birthday surprise!
+        </p>
+      </div>
+    </div>
+
+    <!-- Spotify Embed Section -->
+    <div id="spotifySection" class="section">
+      <iframe
+        style="border-radius: 12px"
+        src="https://open.spotify.com/embed/playlist/3abBqwMDO31Txc3BXPdFrb?utm_source=generator"
+        width="900px"
+        height="500px"
+        frameborder="0"
+        allowfullscreen=""
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy"
+      ></iframe>
+    </div>
+
+    <script>
+      const mailIcon = document.getElementById("mailIcon");
+      const messageSection = document.getElementById("messageSection");
+      const spotifySection = document.getElementById("spotifySection");
+      const messageDiv = document.getElementById("messageDiv");
+
+      // Rotating effect on message box hover
+      messageDiv.addEventListener("mousemove", (event) => {
+        const rect = messageDiv.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+        const rotateX = (y / rect.height - 0.5) * 15;
+        const rotateY = (x / rect.width - 0.5) * -15;
+        messageDiv.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      });
+
+      messageDiv.addEventListener("mouseleave", () => {
+        messageDiv.style.transform = `rotateX(0deg) rotateY(0deg)`;
+      });
+      // Function to disable scrolling
+      function disableScroll() {
+        document.body.classList.remove("show-scrollbar"); // Hide scrollbar
+      }
+
+      // Function to enable scrolling
+      function enableScroll() {
+        document.body.classList.add("show-scrollbar"); // Show scrollbar
+      }
+
+      // Show message section and keep main page visible
+      function showMessageSection() {
+        disableScroll(); // Disable scrolling initially
+        messageSection.classList.add("visible"); // Show message section
+        messageSection.scrollIntoView({ behavior: "smooth" });
+
+        // Confetti explosion
+        const duration = 5 * 1000;
+        const animationEnd = Date.now() + duration;
+        const defaults = {
+          startVelocity: 30,
+          spread: 360,
+          ticks: 60,
+          zIndex: 0,
+        };
+
+        function randomInRange(min, max) {
+          return Math.random() * (max - min) + min;
+        }
+
+        const interval = setInterval(() => {
+          const timeLeft = animationEnd - Date.now();
+          if (timeLeft <= 0) {
+            clearInterval(interval);
+          }
+
+          const particleCount = 50 * (timeLeft / duration);
+          confetti(
+            Object.assign({}, defaults, {
+              particleCount,
+              origin: { x: randomInRange(0, 1), y: Math.random() - 0.2 },
+            })
+          );
+        }, 250);
+      }
+
+      // Show Spotify section
+      function scrollToSpotify() {
+        spotifySection.classList.add("visible"); // Ensure section is visible
+        spotifySection.scrollIntoView({ behavior: "smooth" });
+        enableScroll(); // Re-enable scrolling and show scrollbar
+      }
+
+      // Event listener for mail icon to scroll to message section
+      mailIcon.addEventListener("click", () => {
+        showMessageSection();
+      });
+
+      // Event listener for message box click to scroll to Spotify section
+      messageDiv.addEventListener("click", () => {
+        scrollToSpotify();
+      });
+
+      // Initialize scrolling control
+      window.addEventListener("scroll", () => {
+        const sections = document.querySelectorAll(".section");
+        const viewportHeight = window.innerHeight;
+
+        sections.forEach((section) => {
+          const rect = section.getBoundingClientRect();
+          const sectionTop = rect.top;
+          const sectionBottom = rect.bottom;
+
+          if (sectionTop < viewportHeight && sectionBottom > 0) {
+            // Add visible class when section is in view
+            section.classList.add("visible");
+
+            if (section === spotifySection) {
+              enableScroll(); // Show scrollbar when Spotify section is in view
+            }
+          } else {
+            // Remove visible class when section is out of view
+            section.classList.remove("visible");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
